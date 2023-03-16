@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>can_send</name>
+  <version>0.0.1</version>
+  <description>ROS 2 node for sending CAN frames over socketcan.</description>
+  <maintainer email="info@cognipilot.com">Cogni</maintainer>
+  <author email="info@cognipilot.com">Cogni</author>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>can_msgs</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
