@@ -31,7 +31,7 @@ class CANSend(Node):
         self.CANSubTopic = self.get_parameter("can_input_topic").value
 
         self.bus = can.Bus(channel='{:s}'.format(self.CANChannel), interface='socketcan')
-        self.CANSub = self.create_subscription(Frame, '{:s}'.format(self.CANSubTopic), self.TransmitMessageToSocketCAN, 1)
+        self.CANSub = self.create_subscription(Frame, '{:s}'.format(self.CANSubTopic), self.TransmitMessageToSocketCAN, 20)
 
     def TransmitMessageToSocketCAN(self, msg):
         SocketCANMessage = can.Message(arbitration_id=msg.id, data=msg.data.tolist(), is_extended_id=msg.is_extended, dlc=msg.dlc, )
