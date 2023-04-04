@@ -19,7 +19,7 @@ class CANSend(Node):
 
         can_input_topic_descriptor = ParameterDescriptor(
             type=ParameterType.PARAMETER_STRING,
-            description='can input topic name.')
+            description='CAN input topic name.')
 
         self.declare_parameter("can_input_topic", "/can0_send", 
             can_input_topic_descriptor)
@@ -34,8 +34,13 @@ class CANSend(Node):
         self.CANSub = self.create_subscription(Frame, '{:s}'.format(self.CANSubTopic), self.TransmitMessageToSocketCAN, 20)
 
     def TransmitMessageToSocketCAN(self, msg):
-        SocketCANMessage = can.Message(arbitration_id=msg.id, data=msg.data.tolist(), is_extended_id=msg.is_extended, dlc=msg.dlc, )
-        self.bus.send(SocketCANMessage)
+        SocketCANMessage = can.Message(arbitration_id=msg.id, data=msg.data.tolist(), is_extended_id=msg.is_extended, dlc=msg.dlc)
+        try:
+            self.bus.send(SocketCANMessage)
+        except can.CanError:
+            print('Message {:s} : {:08x} [{:x}] {:s} NOT sent'.format(
+                self.CANChannel, msg.id, msg.dlc,
+                ''.join(map("{:02x} ".format, msg.data.tolist())).upper()))
 
 def main(args=None):
     rclpy.init()
